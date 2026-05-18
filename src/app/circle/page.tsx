@@ -94,13 +94,15 @@ export default function CirclePage() {
                       <div className="text-sm text-[var(--text-dim)] flex items-center gap-1.5">👥 {memberCounts[c.id] || 0} members</div>
                       <button
                         onClick={(e) => { e.preventDefault(); toggleJoin(c.id) }}
-                        className={`px-[18px] py-[7px] rounded-[var(--radius-pill)] text-sm font-semibold cursor-pointer transition-all font-sans ${
+                        className={`group px-[18px] py-[7px] rounded-[var(--radius-pill)] text-sm font-semibold cursor-pointer transition-all font-sans ${
                           joinedIds.has(c.id)
-                            ? 'bg-[var(--teal-glow)] text-[var(--teal)] border border-[var(--border-teal)]'
+                            ? 'bg-[var(--teal-glow)] text-[var(--teal)] border border-[var(--border-teal)] hover:bg-red-500/10 hover:text-red-400 hover:border-red-400/30'
                             : 'bg-[var(--teal)] text-[#080C14] border-none hover:bg-[#00f5d0]'
                         }`}
                       >
-                        {joinedIds.has(c.id) ? '✓ Joined' : '+ Join'}
+                        <span className={joinedIds.has(c.id) ? 'group-hover:hidden' : ''}>✓ Joined</span>
+                        <span className={joinedIds.has(c.id) ? 'hidden group-hover:inline' : ''}>Leave</span>
+                        {!joinedIds.has(c.id) && '+ Join'}
                       </button>
                     </div>
                   </div>
@@ -120,7 +122,13 @@ export default function CirclePage() {
                     <div className="text-sm text-[var(--text-dim)] leading-[1.5] mb-3.5">{c.description}</div>
                     <div className="flex items-center justify-between">
                       <div className="text-sm text-[var(--text-dim)] flex items-center gap-1.5">👥 {memberCounts[c.id] || 0} members</div>
-                      <span className="px-[18px] py-[7px] rounded-[var(--radius-pill)] text-sm font-semibold bg-[var(--teal-glow)] text-[var(--teal)] border border-[var(--border-teal)]">✓ Joined</span>
+                      <button
+                        onClick={(e) => { e.preventDefault(); toggleJoin(c.id) }}
+                        className="group px-[18px] py-[7px] rounded-[var(--radius-pill)] text-sm font-semibold bg-[var(--teal-glow)] text-[var(--teal)] border border-[var(--border-teal)] hover:bg-red-500/10 hover:text-red-400 hover:border-red-400/30 transition-all"
+                      >
+                        <span className="group-hover:hidden">✓ Joined</span>
+                        <span className="hidden group-hover:inline">Leave</span>
+                      </button>
                     </div>
                   </div>
                 </Link>

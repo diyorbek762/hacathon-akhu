@@ -102,7 +102,7 @@ export default function ProfilePage() {
           </div>
           <div className="flex gap-2.5 pt-2">
             <Link href="/messages" className="inline-flex items-center gap-2.5 px-5 py-2.5 bg-transparent text-[var(--teal)] border border-[var(--border-teal)] rounded-[var(--radius-pill)] font-semibold text-sm no-underline transition-all hover:bg-[var(--teal-glow)]">✉️ Message</Link>
-            <button className="px-5 py-2.5 bg-[var(--teal)] text-[#080C14] rounded-[var(--radius-pill)] font-semibold text-sm transition-all hover:bg-[#00f5d0]">+ Connect</button>
+            <Link href="/profile/edit" className="px-5 py-2.5 bg-[var(--teal)] text-[#080C14] rounded-[var(--radius-pill)] font-semibold text-sm no-underline transition-all hover:bg-[#00f5d0]">✏️ Edit Profile</Link>
           </div>
         </div>
       </div>
