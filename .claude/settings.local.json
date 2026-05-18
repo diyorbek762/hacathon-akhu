@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//home/diyorbek/.claude/**)",
+      "Bash(sqlite3 --version)",
+      "Bash(npm --version)",
+      "Bash(npx --version)",
+      "Bash(pip3 show:*)",
+      "Bash(npx -y create-vite --version)",
+      "Bash(npm list:*)",
+      "Bash(chmod +x /home/diyorbek/hacathon-akhu/SETUP.sh)",
+      "Bash(chmod +x:*)"
+    ]
+  }
+}

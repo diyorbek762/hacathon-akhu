@@ -1,0 +1,1 @@
+-- Copy your topic-specific schema here from ../schemas/[topic].sql
