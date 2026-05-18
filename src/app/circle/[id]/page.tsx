@@ -23,9 +23,8 @@ export default function CircleChannelPage() {
   const [input, setInput] = useState('')
   const [isAdmin, setIsAdmin] = useState(false)
   const [currentUserId, setCurrentUserId] = useState<string | null>(null)
-  const supabase = createClient()
-
   useEffect(() => {
+    const supabase = createClient()
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) setCurrentUserId(user.id)
     })
@@ -33,6 +32,7 @@ export default function CircleChannelPage() {
 
   useEffect(() => {
     if (!currentUserId || !circleId) return
+    const supabase = createClient()
     supabase
       .from('circle_members')
       .select('role')
@@ -46,6 +46,7 @@ export default function CircleChannelPage() {
 
   const handlePost = async () => {
     if (!input.trim() || !currentUserId) return
+    const supabase = createClient()
     await supabase.from('circle_messages').insert({
       circle_id: circleId,
       sender_id: currentUserId,

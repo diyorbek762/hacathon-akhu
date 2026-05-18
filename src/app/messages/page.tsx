@@ -30,9 +30,9 @@ export default function MessagesPage() {
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(true)
   const bodyRef = useRef<HTMLDivElement>(null)
-  const supabase = createClient()
 
   useEffect(() => {
+    const supabase = createClient()
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) {
         setUserId(user.id)
@@ -48,6 +48,7 @@ export default function MessagesPage() {
   useEffect(() => {
     if (!userId) return
 
+    const supabase = createClient()
     const channel = supabase
       .channel('dm-realtime')
       .on(
@@ -73,6 +74,7 @@ export default function MessagesPage() {
   }, [userId, activeConv])
 
   const fetchConversations = async (uid: string) => {
+    const supabase = createClient()
     const { data: msgs } = await supabase
       .from('messages')
       .select('*, sender:profiles(full_name)')
@@ -108,6 +110,7 @@ export default function MessagesPage() {
   const fetchMessages = async (otherId: string) => {
     if (!userId) return
     setActiveConv(otherId)
+    const supabase = createClient()
     const { data } = await supabase
       .from('messages')
       .select('*, sender:profiles(full_name, avatar_url)')
@@ -121,6 +124,7 @@ export default function MessagesPage() {
 
   const sendMessage = async () => {
     if (!input.trim() || !userId || !activeConv) return
+    const supabase = createClient()
     await supabase.from('messages').insert({
       sender_id: userId,
       receiver_id: activeConv,
