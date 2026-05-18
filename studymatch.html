@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StudyMatch — Find Your People</title>
+<title>PEER MATCH — Find Your People</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
@@ -670,23 +670,23 @@
   .ms-bar-wrap { height: 4px; background: var(--surface2); border-radius: 2px; }
   .ms-bar { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--teal), var(--accent-cyan)); }
 
-  .community-list { display: flex; flex-direction: column; gap: 12px; }
-  .community-item {
+  .circle-list { display: flex; flex-direction: column; gap: 12px; }
+  .circle-item {
     display: flex; align-items: center; gap: 14px;
     padding: 14px;
     background: var(--bg2); border-radius: var(--radius-sm);
     cursor: pointer; transition: all .2s;
   }
-  .community-item:hover { background: var(--surface2); }
-  .comm-icon {
+  .circle-item:hover { background: var(--surface2); }
+  .circ-icon {
     width: 44px; height: 44px; border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
     font-size: 1.2rem; flex-shrink: 0;
   }
-  .comm-info { flex: 1; }
-  .comm-name { font-size: 0.88rem; font-weight: 600; margin-bottom: 3px; }
-  .comm-members { font-size: 0.75rem; color: var(--text-dim); }
-  .comm-joined {
+  .circ-info { flex: 1; }
+  .circ-name { font-size: 0.88rem; font-weight: 600; margin-bottom: 3px; }
+  .circ-members { font-size: 0.75rem; color: var(--text-dim); }
+  .circ-joined {
     font-size: 0.7rem; padding: 3px 9px;
     border-radius: var(--radius-pill);
     background: var(--teal-glow); border: 1px solid var(--border-teal);
@@ -709,73 +709,73 @@
   }
   .btn-cta-large:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,212,180,0.45); }
 
-  /* ==============================
-     COMMUNITIES PAGE
-  ============================== */
-  #page-communities {
+/* ==============================
+      CIRCLE PAGE
+   ============================== */
+  #page-circle {
     padding-top: 68px;
     min-height: 100vh;
   }
-  .communities-hero {
+  .circle-hero {
     background: var(--bg2);
     border-bottom: 1px solid var(--border);
     padding: 48px 64px 40px;
     position: relative; overflow: hidden;
   }
-  .comm-hero-glow {
+  .circle-hero-glow {
     position: absolute; top: -80px; right: -80px;
     width: 400px; height: 400px;
     background: radial-gradient(circle, rgba(124,111,247,0.12) 0%, transparent 60%);
   }
-  .communities-hero h1 {
+  .circle-hero h1 {
     font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800;
     margin-bottom: 10px; position: relative; z-index: 1;
   }
-  .communities-hero p {
+  .circle-hero p {
     color: var(--text-dim); font-size: 1rem; max-width: 500px;
     margin-bottom: 24px; position: relative; z-index: 1;
   }
-  .comm-search-wrap {
+  .circle-search-wrap {
     display: flex; gap: 12px; position: relative; z-index: 1;
     max-width: 480px;
   }
-  .comm-search {
+  .circle-search {
     flex: 1; padding: 11px 16px;
     background: var(--surface); border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
     outline: none; transition: border-color .2s;
   }
-  .comm-search:focus { border-color: var(--teal); }
+  .circle-search:focus { border-color: var(--teal); }
 
-  .communities-body {
+  .circle-body {
     padding: 32px 64px;
   }
-  .comm-section-title {
+  .circle-section-title {
     font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700;
     margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
   }
-  .comm-grid {
+  .circle-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 20px; margin-bottom: 40px;
   }
-  .comm-card {
+  .circle-card {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: var(--radius); overflow: hidden;
     transition: all .25s; cursor: pointer;
   }
-  .comm-card:hover { border-color: var(--border-teal); transform: translateY(-2px); box-shadow: var(--shadow); }
-  .comm-card-banner {
+  .circle-card:hover { border-color: var(--border-teal); transform: translateY(-2px); box-shadow: var(--shadow); }
+  .circle-card-banner {
     height: 80px;
     position: relative; overflow: hidden;
     display: flex; align-items: center; justify-content: center;
     font-size: 2.5rem;
   }
-  .comm-card-body { padding: 20px; }
-  .comm-card-name { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
-  .comm-card-desc { font-size: 0.83rem; color: var(--text-dim); line-height: 1.5; margin-bottom: 14px; }
-  .comm-card-footer { display: flex; align-items: center; justify-content: space-between; }
-  .comm-members-count { font-size: 0.8rem; color: var(--text-dim); display: flex; align-items: center; gap: 5px; }
+  .circle-card-body { padding: 20px; }
+  .circle-card-name { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+  .circle-card-desc { font-size: 0.83rem; color: var(--text-dim); line-height: 1.5; margin-bottom: 14px; }
+  .circle-card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .circle-members-count { font-size: 0.8rem; color: var(--text-dim); display: flex; align-items: center; gap: 5px; }
   .btn-join {
     padding: 7px 18px;
     border-radius: var(--radius-pill);
@@ -932,8 +932,8 @@
 <!-- ===================== NAV ===================== -->
 <nav>
   <a class="nav-logo" onclick="showPage('hero')">
-    <div class="logo-icon">📚</div>
-    Study<span>Match</span>
+    <div class="logo-icon">PM</div>
+    PEER<span>MATCH</span>
   </a>
   <div class="nav-links">
     <button class="nav-link" id="nl-discover" onclick="showPage('discover')">Discover</button>
@@ -1165,7 +1165,7 @@
       </div>
       <div class="profile-actions">
         <button class="btn-secondary" style="padding:10px 20px;font-size:0.85rem;" onclick="showPage('messages')">✉️ Message</button>
-        <button class="btn-primary" style="padding:10px 20px;font-size:0.85rem;" onclick="toggleConnect(this)">+ Connect</button>
+        <button class="btn-primary" style="padding:10px 20px;font-size:0.85rem;" onclick="showPage('profile')">✏️ Edit Profile</button>
       </div>
     </div>
   </div>
@@ -1346,40 +1346,40 @@
       </div>
     </div>
 
-    <!-- Circle -->
+<!-- Circle -->
     <div class="card-block">
       <div class="block-title"><span>🌐</span> Circle</div>
-      <div class="community-list">
-        <div class="community-item" onclick="showPage('circle')">
-          <div class="comm-icon" style="background:rgba(124,111,247,0.15)">🤖</div>
-          <div class="comm-info">
-            <div class="comm-name">MIT AI Research Group</div>
-            <div class="comm-members">👥 1,248 members · Very active</div>
+      <div class="circle-list">
+        <div class="circle-item" onclick="showPage('circle')">
+          <div class="circ-icon" style="background:rgba(124,111,247,0.15)">🤖</div>
+          <div class="circ-info">
+            <div class="circ-name">MIT AI Research Group</div>
+            <div class="circ-members">👥 1,248 members · Very active</div>
           </div>
-          <div class="comm-joined">Joined</div>
+          <div class="circ-joined">Joined</div>
         </div>
-        <div class="community-item" onclick="showPage('circle')">
-          <div class="comm-icon" style="background:rgba(0,212,180,0.12)">🚀</div>
-          <div class="comm-info">
-            <div class="comm-name">Startup Founders Club</div>
-            <div class="comm-members">👥 892 members · Active</div>
+        <div class="circle-item" onclick="showPage('circle')">
+          <div class="circ-icon" style="background:rgba(0,212,180,0.12)">🚀</div>
+          <div class="circ-info">
+            <div class="circ-name">Startup Founders Club</div>
+            <div class="circ-members">👥 892 members · Active</div>
           </div>
-          <div class="comm-joined">Joined</div>
+          <div class="circ-joined">Joined</div>
         </div>
-        <div class="community-item" onclick="showPage('circle')">
-          <div class="comm-icon" style="background:rgba(255,171,64,0.12)">💪</div>
-          <div class="comm-info">
-            <div class="comm-name">5AM Gym Squad</div>
-            <div class="comm-members">👥 344 members · Active</div>
+        <div class="circle-item" onclick="showPage('circle')">
+          <div class="circ-icon" style="background:rgba(255,171,64,0.12)">💪</div>
+          <div class="circ-info">
+            <div class="circ-name">5AM Gym Squad</div>
+            <div class="circ-members">👥 344 members · Active</div>
           </div>
-          <div class="comm-joined">Joined</div>
+          <div class="circ-joined">Joined</div>
         </div>
       </div>
     </div>
 
     <!-- CTA -->
     <div class="request-cta-wrap">
-      <button class="btn-cta-large" onclick="alert('✅ Study session request sent! Check your messages for responses.')">
+      <button class="btn-cta-large" onclick="showPage('messages')">
         📅 Request Study Session
       </button>
     </div>
@@ -1388,21 +1388,21 @@
 
 <!-- ===================== COMMUNITIES PAGE ===================== -->
 <div id="page-circle" class="page">
-  <div class="communities-hero">
-    <div class="comm-hero-glow"></div>
+  <div class="circle-hero">
+    <div class="circle-hero-glow"></div>
     <h1>📡 Circle</h1>
     <p>Your curated study groups, clubs, and squads — all in one circle.</p>
-    <div class="comm-search-wrap">
-      <input class="comm-search" type="text" placeholder="🔍 Search circles...">
-      <button class="btn-primary" style="padding:11px 22px;font-size:0.88rem;white-space:nowrap;" onclick="renderCommunities(true);this.remove()">Browse All</button>
+    <div class="circle-search-wrap">
+      <input class="circle-search" type="text" placeholder="🔍 Search circles...">
+      <button class="btn-primary" style="padding:11px 22px;font-size:0.88rem;white-space:nowrap;" onclick="renderCircles(true)">Browse All</button>
     </div>
   </div>
-  <div class="communities-body">
-    <div class="comm-section-title">🔥 Trending Circles <span style="font-size:0.8rem;color:var(--text-muted);font-weight:400;">  · Updated daily</span></div>
-    <div class="comm-grid" id="comm-grid"></div>
+  <div class="circle-body">
+    <div class="circle-section-title">🔥 Trending Circles <span style="font-size:0.8rem;color:var(--text-muted);font-weight:400;">  · Updated daily</span></div>
+    <div class="circle-grid" id="circle-grid"></div>
 
-    <div class="comm-section-title">📚 Your Circle</div>
-    <div class="comm-grid" id="your-comm-grid"></div>
+    <div class="circle-section-title">📚 Your Circle</div>
+    <div class="circle-grid" id="your-circle-grid"></div>
   </div>
 </div>
 
@@ -1423,7 +1423,7 @@
         <div class="msg-header-status">🟢 Active now · MIT · CS Junior</div>
       </div>
       <div class="msg-header-actions">
-        <button class="msg-action-btn" onclick="alert('📅 Study session request sent!')">📅 Schedule Study</button>
+        <button class="msg-action-btn">📅 Schedule Study</button>
         <button class="msg-action-btn" onclick="showPage('profile')">👤 View Profile</button>
       </div>
     </div>
@@ -1470,14 +1470,15 @@ function togglePill(el) {
   el.classList.toggle('active');
 }
 
-function toggleConnect(btn) {
+function handleConnect(btn, e) {
+  e.stopPropagation();
   if (btn.textContent.includes('Connect') && !btn.textContent.includes('✓')) {
     btn.textContent = '✓ Connected';
     btn.style.background = 'rgba(0,212,180,0.15)';
     btn.style.color = 'var(--teal)';
-    btn.style.border = '1.5px solid var(--border-teal)';
+    btn.style.border = '1px solid var(--border-teal)';
   } else {
-    btn.textContent = '+ Connect';
+    btn.textContent = 'Connect';
     btn.style.background = 'var(--teal)';
     btn.style.color = '#080C14';
     btn.style.border = 'none';
@@ -1539,7 +1540,7 @@ function renderCards() {
       <div class="pc-bio">${s.bio}</div>
       <div class="pc-mutual">🤝 ${s.mutual} mutual connections</div>
       <div class="pc-actions">
-        <button class="btn-connect" onclick="event.stopPropagation()">Connect</button>
+        <button class="btn-connect" onclick="handleConnect(this, event)">Connect</button>
         <button class="btn-view" onclick="event.stopPropagation();showPage('profile')">View Profile</button>
       </div>
     </div>
@@ -1548,9 +1549,9 @@ function renderCards() {
 renderCards();
 
 // ============================
-// COMMUNITIES DATA
+// CIRCLES DATA
 // ============================
-const communities = [
+const circles = [
   { emoji: '🤖', name: 'AI Research Collective', desc: 'Weekly paper readings, research discussions, and project collaborations in machine learning and AI.', members: 2840, joined: true, bg: 'linear-gradient(135deg,rgba(124,111,247,0.3),rgba(0,212,180,0.1))' },
   { emoji: '🚀', name: 'Founders & Builders', desc: 'Connect with student entrepreneurs building real startups. Demo nights every Friday.', members: 1650, joined: true, bg: 'linear-gradient(135deg,rgba(0,212,180,0.2),rgba(64,196,255,0.1))' },
   { emoji: '💪', name: '5AM Gym Squad', desc: 'Early risers who hit the campus gym before 7am. Accountability and motivation built in.', members: 412, joined: false, bg: 'linear-gradient(135deg,rgba(255,171,64,0.2),rgba(240,98,146,0.1))' },
@@ -1559,26 +1560,26 @@ const communities = [
   { emoji: '♟️', name: 'Chess & Strategy Club', desc: 'Weekly tournaments, blitz sessions, and strategic thinking workshops. All levels welcome.', members: 295, joined: true, bg: 'linear-gradient(135deg,rgba(105,240,174,0.15),rgba(0,212,180,0.1))' },
 ];
 
-function renderCommunities(showAll) {
-  const grid = document.getElementById('comm-grid');
-  const yours = document.getElementById('your-comm-grid');
+function renderCircles(showAll) {
+  const grid = document.getElementById('circle-grid');
+  const yours = document.getElementById('your-circle-grid');
   const cards = (list) => list.map(c => `
-    <div class="comm-card">
-      <div class="comm-card-banner" style="background:${c.bg}">${c.emoji}</div>
-      <div class="comm-card-body">
-        <div class="comm-card-name">${c.name}</div>
-        <div class="comm-card-desc">${c.desc}</div>
-        <div class="comm-card-footer">
-          <div class="comm-members-count">👥 ${c.members.toLocaleString()} members</div>
+    <div class="circle-card">
+      <div class="circle-card-banner" style="background:${c.bg}">${c.emoji}</div>
+      <div class="circle-card-body">
+        <div class="circle-card-name">${c.name}</div>
+        <div class="circle-card-desc">${c.desc}</div>
+        <div class="circle-card-footer">
+          <div class="circle-members-count">👥 ${c.members.toLocaleString()} members</div>
           <button class="btn-join ${c.joined ? 'joined' : 'not-joined'}" onclick="toggleJoin(this)">${c.joined ? '✓ Joined' : '+ Join'}</button>
         </div>
       </div>
     </div>
   `).join('');
-  grid.innerHTML = showAll ? cards(communities) : cards(communities.slice(0,4));
-  yours.innerHTML = cards(communities.filter(c=>c.joined));
+  grid.innerHTML = showAll ? cards(circles) : cards(circles.slice(0,4));
+  yours.innerHTML = cards(circles.filter(c=>c.joined));
 }
-renderCommunities();
+renderCircles();
 
 function toggleJoin(btn) {
   if (btn.classList.contains('joined')) {
@@ -1609,7 +1610,7 @@ const convMsgs = [
   { mine: false, text: 'I\'m free Thursday afternoons and Friday mornings. Maybe we could meet at the library on Thursday around 2pm?' },
   { mine: true, text: 'Thursday 2pm works perfectly for me! The 3rd floor study rooms are usually open. Should I book one?' },
   { mine: false, text: 'That would be amazing! Can you also book it for 3 hours? I want to go through the attention mechanisms section in detail 📚' },
-  { mine: true, text: 'Done! I\'ll send a calendar invite. Also feel free to check out my notes from last week — I\'ll share them in the StudyMatch app.' },
+  { mine: true, text: 'Done! I\'ll send a calendar invite. Also feel free to check out my notes from last week — I\'ll share them in the PEER MATCH app.' },
   { mine: false, text: 'Perfect. Are you free Thursday afternoon for NLP study? 😄' },
 ];
 
