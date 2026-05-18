@@ -463,11 +463,16 @@
   .btn-connect {
     flex: 1; padding: 9px;
     background: var(--teal); color: #080C14;
-    border: none; border-radius: var(--radius-sm);
+    border: 1px solid transparent; border-radius: var(--radius-sm);
     font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600;
     cursor: pointer; transition: all .2s;
+    box-sizing: border-box;
   }
   .btn-connect:hover { background: #00f5d0; }
+  .btn-connect.connected {
+    background: var(--teal-glow); color: var(--teal);
+    border-color: var(--border-teal);
+  }
   .btn-view {
     flex: 1; padding: 9px;
     background: transparent; color: var(--text);
@@ -849,6 +854,8 @@
   .msg-main {
     display: flex; flex-direction: column;
     background: var(--bg);
+    height: calc(100vh - 68px);
+    overflow: hidden;
   }
   .msg-header {
     padding: 16px 24px;
@@ -1472,16 +1479,12 @@ function togglePill(el) {
 
 function handleConnect(btn, e) {
   e.stopPropagation();
-  if (btn.textContent.includes('Connect') && !btn.textContent.includes('✓')) {
-    btn.textContent = '✓ Connected';
-    btn.style.background = 'rgba(0,212,180,0.15)';
-    btn.style.color = 'var(--teal)';
-    btn.style.border = '1px solid var(--border-teal)';
-  } else {
+  if (btn.classList.contains('connected')) {
+    btn.classList.remove('connected');
     btn.textContent = 'Connect';
-    btn.style.background = 'var(--teal)';
-    btn.style.color = '#080C14';
-    btn.style.border = 'none';
+  } else {
+    btn.classList.add('connected');
+    btn.textContent = '✓ Connected';
   }
 }
 
