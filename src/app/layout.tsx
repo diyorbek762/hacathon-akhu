@@ -3,7 +3,7 @@ import './globals.css'
 import Nav from '@/components/Nav'
 
 export const metadata: Metadata = {
-  title: 'StudyMatch — Find Your People',
+  title: 'PEER MATCH — Find Your People',
   description:
     'We match students by shared interests, courses, and goals — so you spend less time searching and more time thriving.',
 }
