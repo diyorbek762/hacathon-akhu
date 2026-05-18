@@ -18,9 +18,7 @@ export default function Nav() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-[999] flex items-center justify-between px-12 h-[68px] bg-[rgba(8,12,20,0.85)] backdrop-blur-xl border-b border-[var(--border)]">
       <Link href="/" className="flex items-center gap-2.5 no-underline">
-        <div className="w-8 h-8 bg-gradient-to-br from-[var(--teal)] to-[var(--accent-purple)] rounded-lg flex items-center justify-center text-base">
-          📚
-        </div>
+        <img src="/logo.png" alt="StudyMatch" className="w-8 h-8 rounded-lg object-cover" />
         <span className="font-syne font-extrabold text-[1.3rem] text-[var(--text)]">
           Study<span className="text-[var(--teal)]">Match</span>
         </span>

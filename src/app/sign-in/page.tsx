@@ -27,7 +27,7 @@ export default function SignInPage() {
     <div className="min-h-screen flex items-center justify-center bg-[var(--bg)] px-6">
       <div className="w-full max-w-md">
         <Link href="/" className="flex items-center justify-center gap-2.5 mb-10 no-underline">
-          <div className="w-10 h-10 bg-gradient-to-br from-[var(--teal)] to-[var(--accent-purple)] rounded-lg flex items-center justify-center text-xl">📚</div>
+          <img src="/logo.png" alt="StudyMatch" className="w-10 h-10 rounded-lg object-cover" />
           <span className="font-syne font-extrabold text-2xl text-[var(--text)]">
             Study<span className="text-[var(--teal)]">Match</span>
           </span>
