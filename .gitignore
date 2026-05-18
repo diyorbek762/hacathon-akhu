@@ -3,6 +3,7 @@ node_modules/
 .env.local
 .next/
 dist/
+scripts/seed.mjs
 *.db
 *.sqlite
 .next/

@@ -1,6 +1,15 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { createClient } from '@/lib/supabase/client'
+
+interface CircleInfo {
+  id: string
+  name: string
+  icon: string
+  memberCount: number
+}
 
 const interests = [
   { label: 'Machine Learning', cls: 'tag-purple' },
@@ -38,6 +47,31 @@ const tagStyles: Record<string, string> = {
 }
 
 export default function ProfilePage() {
+  const [circleList, setCircleList] = useState<CircleInfo[]>([])
+  const [profile, setProfile] = useState<{ full_name?: string; university?: string; department?: string; bio?: string }>({})
+
+  useEffect(() => {
+    const supabase = createClient()
+    supabase.auth.getUser().then(async ({ data: { user } }) => {
+      if (!user) return
+
+      const { data: prof } = await supabase.from('profiles').select('*').eq('id', user.id).single()
+      if (prof) setProfile(prof)
+
+      const { data: memberships } = await supabase.from('circle_members').select('circle_id').eq('user_id', user.id)
+      if (!memberships) return
+
+      const infos: CircleInfo[] = []
+      for (const m of memberships) {
+        const { data: c } = await supabase.from('circles').select('id, name, icon').eq('id', m.circle_id).single()
+        if (c) {
+          const { count } = await supabase.from('circle_members').select('*', { count: 'exact', head: true }).eq('circle_id', c.id)
+          infos.push({ id: c.id, name: c.name, icon: c.icon, memberCount: count || 0 })
+        }
+      }
+      setCircleList(infos)
+    })
+  }, [])
   return (
     <div className="page-enter min-h-screen pt-[68px]">
       <div className="h-[220px] bg-gradient-to-br from-[#0a1628] via-[#0d2040] to-[#0a1628] relative overflow-hidden">
@@ -76,7 +110,7 @@ export default function ProfilePage() {
       <div className="flex bg-[var(--bg2)] border-b border-[var(--border)]">
         {[
           { num: '247', label: 'Connections' },
-          { num: '8', label: 'Circles' },
+          { num: String(circleList.length || 0), label: 'Circles' },
           { num: '142', label: 'Study Sessions' },
           { num: '+1.6 GPA', label: 'Avg Grade Boost' },
         ].map((s) => (
@@ -185,16 +219,14 @@ export default function ProfilePage() {
         <div className="bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius)] p-6 transition-colors hover:border-[var(--border-teal)]">
           <div className="font-syne font-bold text-sm uppercase tracking-[1px] text-[var(--text-muted)] mb-4 flex items-center gap-2"><span>🌐</span> Circle</div>
           <div className="flex flex-col gap-3">
-            {[
-              { icon: '🤖', name: 'MIT AI Research Group', members: '1,248 members · Very active', bg: 'rgba(124,111,247,0.15)' },
-              { icon: '🚀', name: 'Startup Founders Club', members: '892 members · Active', bg: 'rgba(0,212,180,0.12)' },
-              { icon: '💪', name: '5AM Gym Squad', members: '344 members · Active', bg: 'rgba(255,171,64,0.12)' },
-            ].map((c) => (
-              <Link key={c.name} href="/circle" className="flex items-center gap-3.5 px-3.5 py-3 bg-[var(--bg2)] rounded-[var(--radius-sm)] cursor-pointer transition-colors hover:bg-[var(--surface2)] no-underline">
-                <div className="w-11 h-11 rounded-[12px] flex items-center justify-center text-[1.2rem] flex-shrink-0" style={{ background: c.bg }}>{c.icon}</div>
+            {circleList.length === 0 ? (
+              <p className="text-sm text-[var(--text-muted)] px-1">No circles joined yet.</p>
+            ) : circleList.map((c) => (
+              <Link key={c.id} href={`/circle/${c.id}`} className="flex items-center gap-3.5 px-3.5 py-3 bg-[var(--bg2)] rounded-[var(--radius-sm)] cursor-pointer transition-colors hover:bg-[var(--surface2)] no-underline">
+                <div className="w-11 h-11 rounded-[12px] flex items-center justify-center text-[1.2rem] flex-shrink-0 bg-[rgba(124,111,247,0.15)]">{c.icon}</div>
                 <div className="flex-1">
                   <div className="text-sm font-semibold text-[var(--text)] mb-0.5">{c.name}</div>
-                  <div className="text-[0.75rem] text-[var(--text-dim)]">{c.members}</div>
+                  <div className="text-[0.75rem] text-[var(--text-dim)]">👥 {c.memberCount} members</div>
                 </div>
                 <div className="text-[0.7rem] px-2 py-0.5 rounded-[var(--radius-pill)] bg-[var(--teal-glow)] border border-[var(--border-teal)] text-[var(--teal)]">Joined</div>
               </Link>

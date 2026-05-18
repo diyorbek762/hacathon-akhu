@@ -1,24 +1,36 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
-const students = [
-  { name: 'Mia Chen', emoji: '👩‍💻', univ: 'MIT · Junior', tags: [{label:'Machine Learning',cls:'tag-purple'},{label:'Startup Club',cls:'tag-teal'},{label:'Morning Gym',cls:'tag-amber'}], bio: 'Building AI tools for education, love hackathons!', mutual: 12, match: 96 },
-  { name: 'Luca Moretti', emoji: '🧑‍🔬', univ: 'Stanford · Senior', tags: [{label:'Deep Learning',cls:'tag-cyan'},{label:'Research Lab',cls:'tag-green'},{label:'Chess',cls:'tag-pink'}], bio: 'Researching LLMs, open to study sessions anytime.', mutual: 8, match: 88 },
-  { name: 'Zara Ahmed', emoji: '👩‍🎨', univ: 'NYU · Sophomore', tags: [{label:'UI/UX Design',cls:'tag-amber'},{label:'Photography',cls:'tag-purple'},{label:'Hackathons',cls:'tag-teal'}], bio: 'Design meets tech. Looking for product-minded builders.', mutual: 5, match: 84 },
-  { name: 'James Park', emoji: '🧑‍💼', univ: 'Harvard · Junior', tags: [{label:'Entrepreneurship',cls:'tag-green'},{label:'VC & Finance',cls:'tag-cyan'},{label:'Running',cls:'tag-amber'}], bio: 'Building the next big thing one sprint at a time.', mutual: 14, match: 79 },
-  { name: 'Priya Sharma', emoji: '👩‍🔬', univ: 'Caltech · Senior', tags: [{label:'Robotics',cls:'tag-pink'},{label:'Control Systems',cls:'tag-purple'},{label:'Yoga',cls:'tag-teal'}], bio: 'Robotics engineer by day, bookworm by night.', mutual: 3, match: 75 },
-  { name: 'Carlos Vega', emoji: '🧑‍🎓', univ: 'USC · Junior', tags: [{label:'Data Science',cls:'tag-cyan'},{label:'Film Club',cls:'tag-amber'},{label:'Basketball',cls:'tag-green'}], bio: 'Data x storytelling.', mutual: 7, match: 71 },
-  { name: 'Aiko Tanaka', emoji: '👩‍💻', univ: 'CMU · Sophomore', tags: [{label:'Systems Prog',cls:'tag-purple'},{label:'Competitive Coding',cls:'tag-teal'},{label:'Guitar',cls:'tag-pink'}], bio: 'All-night coder, weekend hiker.', mutual: 9, match: 82 },
-  { name: 'Omar Khalil', emoji: '🧑‍🏫', univ: 'UPenn · Senior', tags: [{label:'Quant Finance',cls:'tag-amber'},{label:'ML Research',cls:'tag-purple'},{label:'Swimming',cls:'tag-cyan'}], bio: 'Bridging math and markets.', mutual: 6, match: 68 },
-]
+interface Student {
+  id: string
+  full_name: string
+  university: string
+  department: string
+  bio: string
+  interests: string[]
+}
 
 const chips = ['⭐ High Match', '📚 Same Course', '📍 Near Me', '🆕 New Members', '🔥 Active This Week', '🤝 Mutual Friends']
 
 export default function DiscoverPage() {
+  const [students, setStudents] = useState<Student[]>([])
   const [activeChips, setActiveChips] = useState<Set<string>>(new Set())
   const [searched, setSearched] = useState(false)
+  const [loadingProfiles, setLoadingProfiles] = useState(true)
+
+  useEffect(() => {
+    import('@/lib/supabase/client').then(({ createClient }) => {
+      const supabase = createClient()
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        supabase.from('profiles').select('id, full_name, university, department, bio, interests').then(({ data }) => {
+          if (data) setStudents(data.filter(s => s.id !== session?.user?.id))
+          setLoadingProfiles(false)
+        })
+      })
+    })
+  }, [])
 
   const toggleChip = (chip: string) => {
     setActiveChips((prev) => {
@@ -117,27 +129,20 @@ export default function DiscoverPage() {
         ) : (
           <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-5">
             {students.map((s) => (
-              <div key={s.name} className="relative bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius)] p-5.5 cursor-pointer transition-all duration-250 hover:border-[var(--border-teal)] hover:-translate-y-[3px] hover:shadow-[var(--shadow),0_0_20px_rgba(0,212,180,0.08)]">
-                {buildMatchRing(s.match)}
-                <div className="flex items-start gap-3.5 mb-3.5 pr-[60px]">
-                  <div className="w-[52px] h-[52px] rounded-full flex-shrink-0 overflow-hidden bg-gradient-to-br from-[var(--accent-purple)] to-[var(--accent-pink)] flex items-center justify-center text-[1.3rem]">{s.emoji}</div>
+              <div key={s.id} className="relative bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius)] p-5.5 cursor-pointer transition-all duration-250 hover:border-[var(--border-teal)] hover:-translate-y-[3px] hover:shadow-[var(--shadow),0_0_20px_rgba(0,212,180,0.08)]">
+                <div className="flex items-start gap-3.5 mb-3.5">
+                  <div className="w-[52px] h-[52px] rounded-full flex-shrink-0 overflow-hidden bg-gradient-to-br from-[var(--accent-purple)] to-[var(--accent-pink)] flex items-center justify-center text-[1.3rem]">👤</div>
                   <div>
-                    <div className="font-syne font-bold text-base mb-0.5">{s.name}</div>
-                    <div className="inline-flex items-center gap-1 text-[0.75rem] text-[var(--text-dim)] bg-[var(--surface2)] rounded-[var(--radius-pill)] px-2 py-0.5">🏛️ {s.univ}</div>
+                    <div className="font-syne font-bold text-base mb-0.5">{s.full_name}</div>
+                    <div className="inline-flex items-center gap-1 text-[0.75rem] text-[var(--text-dim)] bg-[var(--surface2)] rounded-[var(--radius-pill)] px-2 py-0.5">🏛️ {s.university || 'Unknown'} · {s.department || ''}</div>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-1.5 mb-3">
-                  {s.tags.map((t) => (
-                    <span key={t.label} className={`text-[0.73rem] px-2.5 py-1 rounded-[var(--radius-pill)] font-medium ${
-                      t.cls === 'tag-purple' ? 'bg-[rgba(124,111,247,0.15)] text-[var(--accent-purple)] border border-[rgba(124,111,247,0.25)]' :
-                      t.cls === 'tag-teal' ? 'bg-[var(--teal-glow)] text-[var(--teal)] border border-[var(--border-teal)]' :
-                      t.cls === 'tag-amber' ? 'bg-[rgba(255,171,64,0.12)] text-[var(--accent-amber)] border border-[rgba(255,171,64,0.2)]' :
-                      'bg-[rgba(240,98,146,0.12)] text-[var(--accent-pink)] border border-[rgba(240,98,146,0.2)]'
-                    }`}>{t.label}</span>
+                  {(s.interests || []).slice(0, 3).map((interest) => (
+                    <span key={interest} className="text-[0.73rem] px-2.5 py-1 rounded-[var(--radius-pill)] font-medium bg-[var(--teal-glow)] text-[var(--teal)] border border-[var(--border-teal)]">{interest}</span>
                   ))}
                 </div>
-                <p className="text-sm text-[var(--text-dim)] leading-[1.5] mb-3.5">{s.bio}</p>
-                <p className="text-[0.78rem] text-[var(--text-muted)] mb-3.5 flex items-center gap-1.5">🤝 {s.mutual} mutual connections</p>
+                <p className="text-sm text-[var(--text-dim)] leading-[1.5] mb-3.5">{s.bio || 'No bio yet.'}</p>
                 <div className="flex gap-2.5">
                   <button className="flex-1 py-2 bg-[var(--teal)] text-[#080C14] rounded-[var(--radius-sm)] font-semibold text-sm cursor-pointer transition-all hover:bg-[#00f5d0]">Connect</button>
                   <Link href="/profile" className="flex-1 py-2 bg-transparent text-[var(--text)] border border-[var(--border)] rounded-[var(--radius-sm)] font-medium text-sm no-underline text-center transition-all hover:border-[var(--teal)] hover:text-[var(--teal)]">View Profile</Link>
