@@ -1,0 +1,131 @@
+'use client'
+
+import { useState } from 'react'
+import Link from 'next/link'
+
+const students = [
+  { name: 'Mia Chen', emoji: '👩‍💻', univ: 'MIT · Junior', tags: [{label:'Machine Learning',cls:'tag-purple'},{label:'Startup Club',cls:'tag-teal'},{label:'Morning Gym',cls:'tag-amber'}], bio: 'Building AI tools for education, love hackathons!', mutual: 12, match: 96 },
+  { name: 'Luca Moretti', emoji: '🧑‍🔬', univ: 'Stanford · Senior', tags: [{label:'Deep Learning',cls:'tag-cyan'},{label:'Research Lab',cls:'tag-green'},{label:'Chess',cls:'tag-pink'}], bio: 'Researching LLMs, open to study sessions anytime.', mutual: 8, match: 88 },
+  { name: 'Zara Ahmed', emoji: '👩‍🎨', univ: 'NYU · Sophomore', tags: [{label:'UI/UX Design',cls:'tag-amber'},{label:'Photography',cls:'tag-purple'},{label:'Hackathons',cls:'tag-teal'}], bio: 'Design meets tech. Looking for product-minded builders.', mutual: 5, match: 84 },
+  { name: 'James Park', emoji: '🧑‍💼', univ: 'Harvard · Junior', tags: [{label:'Entrepreneurship',cls:'tag-green'},{label:'VC & Finance',cls:'tag-cyan'},{label:'Running',cls:'tag-amber'}], bio: 'Building the next big thing one sprint at a time.', mutual: 14, match: 79 },
+  { name: 'Priya Sharma', emoji: '👩‍🔬', univ: 'Caltech · Senior', tags: [{label:'Robotics',cls:'tag-pink'},{label:'Control Systems',cls:'tag-purple'},{label:'Yoga',cls:'tag-teal'}], bio: 'Robotics engineer by day, bookworm by night.', mutual: 3, match: 75 },
+  { name: 'Carlos Vega', emoji: '🧑‍🎓', univ: 'USC · Junior', tags: [{label:'Data Science',cls:'tag-cyan'},{label:'Film Club',cls:'tag-amber'},{label:'Basketball',cls:'tag-green'}], bio: 'Data x storytelling. Let\'s collaborate on projects!', mutual: 7, match: 71 },
+  { name: 'Aiko Tanaka', emoji: '👩‍💻', univ: 'CMU · Sophomore', tags: [{label:'Systems Prog',cls:'tag-purple'},{label:'Competitive Coding',cls:'tag-teal'},{label:'Guitar',cls:'tag-pink'}], bio: 'All-night coder, weekend hiker. Pair programming enthusiast.', mutual: 9, match: 82 },
+  { name: 'Omar Khalil', emoji: '🧑‍🏫', univ: 'UPenn · Senior', tags: [{label:'Quant Finance',cls:'tag-amber'},{label:'ML Research',cls:'tag-purple'},{label:'Swimming',cls:'tag-cyan'}], bio: 'Bridging math and markets. Study group always welcome.', mutual: 6, match: 68 },
+]
+
+const chips = ['⭐ High Match', '📚 Same Course', '📍 Near Me', '🆕 New Members', '🔥 Active This Week', '🤝 Mutual Friends']
+
+export default function DiscoverPage() {
+  const [activeChips, setActiveChips] = useState<Set<string>>(new Set(['⭐ High Match']))
+
+  const toggleChip = (chip: string) => {
+    setActiveChips((prev) => {
+      const next = new Set(prev)
+      if (next.has(chip)) next.delete(chip)
+      else next.add(chip)
+      return next
+    })
+  }
+
+  function buildMatchRing(pct: number) {
+    const r = 22
+    const circ = 2 * Math.PI * r
+    const offset = circ - (pct / 100) * circ
+    const color = pct >= 85 ? '#00D4B4' : pct >= 70 ? '#FFAB40' : '#F06292'
+    return (
+      <div className="absolute top-4 right-4 w-[52px] h-[52px]">
+        <svg width="52" height="52" viewBox="0 0 52 52" className="-rotate-90">
+          <circle className="fill-none stroke-[var(--surface2)]" strokeWidth="3" cx="26" cy="26" r={r} />
+          <circle className="fill-none" stroke={color} strokeWidth="3" strokeLinecap="round"
+            strokeDasharray={`${circ}`} strokeDashoffset={offset} cx="26" cy="26" r={r} />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center font-syne font-extrabold text-[0.7rem]" style={{ color }}>{pct}%</div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="page-enter min-h-screen pt-[68px]">
+      <div className="hidden lg:block fixed left-0 top-[68px] w-[280px] h-[calc(100vh-68px)] bg-[var(--bg2)] border-r border-[var(--border)] p-7 overflow-y-auto">
+        <div className="font-syne font-bold text-[0.7rem] uppercase tracking-[1.5px] text-[var(--text-muted)] mb-4">🔧 Filters</div>
+        {[
+          { label: '🏛️ Department', options: ['All Departments', 'Computer Science', 'Engineering', 'Business', 'Design'] },
+          { label: '📖 Courses', options: ['Any Course', 'CS 101', 'CS 224N', 'MATH 301'] },
+        ].map((g) => (
+          <div key={g.label} className="mb-7">
+            <div className="text-sm font-semibold text-[var(--text)] mb-2.5 flex items-center gap-2">{g.label}</div>
+            <select className="w-full px-3 py-2 bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius-sm)] text-sm text-[var(--text)] outline-none cursor-pointer focus:border-[var(--teal)]">
+              {g.options.map((o) => <option key={o}>{o}</option>)}
+            </select>
+          </div>
+        ))}
+      </div>
+
+      <div className="lg:ml-[280px] p-7 lg:p-8">
+        <div className="flex items-center justify-between mb-5">
+          <div>
+            <h1 className="font-syne font-extrabold text-2xl">Discover Students</h1>
+            <p className="text-sm text-[var(--text-dim)]">248 students match your filters</p>
+          </div>
+          <Link href="/profile" className="inline-flex items-center gap-2.5 px-5 py-2.5 bg-[var(--teal)] text-[#080C14] rounded-[var(--radius-pill)] font-semibold text-sm no-underline transition-all hover:bg-[#00f5d0]">
+            👁️ View My Profile
+          </Link>
+        </div>
+
+        <div className="flex items-center gap-2.5 mb-6 overflow-x-auto pb-1 scrollbar-none">
+          {chips.map((chip) => (
+            <button
+              key={chip}
+              onClick={() => toggleChip(chip)}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-[var(--radius-pill)] text-sm font-medium whitespace-nowrap border transition-all cursor-pointer ${
+                activeChips.has(chip)
+                  ? 'bg-[var(--teal-glow)] border-[var(--teal)] text-[var(--teal)]'
+                  : 'bg-[var(--surface)] border-[var(--border)] text-[var(--text-dim)] hover:border-[var(--teal)] hover:text-[var(--teal)]'
+              }`}
+            >
+              {chip}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-5">
+          {students.map((s) => (
+            <div key={s.name} className="relative bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius)] p-5.5 cursor-pointer transition-all duration-250 hover:border-[var(--border-teal)] hover:-translate-y-[3px] hover:shadow-[var(--shadow),0_0_20px_rgba(0,212,180,0.08)]">
+              {buildMatchRing(s.match)}
+              <div className="flex items-start gap-3.5 mb-3.5 pr-[60px]">
+                <div className="w-[52px] h-[52px] rounded-full flex-shrink-0 overflow-hidden bg-gradient-to-br from-[var(--accent-purple)] to-[var(--accent-pink)] flex items-center justify-center text-[1.3rem]">
+                  {s.emoji}
+                </div>
+                <div>
+                  <div className="font-syne font-bold text-base mb-0.5">{s.name}</div>
+                  <div className="inline-flex items-center gap-1 text-[0.75rem] text-[var(--text-dim)] bg-[var(--surface2)] rounded-[var(--radius-pill)] px-2 py-0.5">
+                    🏛️ {s.univ}
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-1.5 mb-3">
+                {s.tags.map((t) => (
+                  <span key={t.label} className={`text-[0.73rem] px-2.5 py-1 rounded-[var(--radius-pill)] font-medium ${
+                    t.cls === 'tag-purple' ? 'bg-[rgba(124,111,247,0.15)] text-[var(--accent-purple)] border border-[rgba(124,111,247,0.25)]' :
+                    t.cls === 'tag-teal' ? 'bg-[var(--teal-glow)] text-[var(--teal)] border border-[var(--border-teal)]' :
+                    t.cls === 'tag-amber' ? 'bg-[rgba(255,171,64,0.12)] text-[var(--accent-amber)] border border-[rgba(255,171,64,0.2)]' :
+                    'bg-[rgba(240,98,146,0.12)] text-[var(--accent-pink)] border border-[rgba(240,98,146,0.2)]'
+                  }`}>{t.label}</span>
+                ))}
+              </div>
+              <p className="text-sm text-[var(--text-dim)] leading-[1.5] mb-3.5">{s.bio}</p>
+              <p className="text-[0.78rem] text-[var(--text-muted)] mb-3.5 flex items-center gap-1.5">🤝 {s.mutual} mutual connections</p>
+              <div className="flex gap-2.5">
+                <button className="flex-1 py-2 bg-[var(--teal)] text-[#080C14] rounded-[var(--radius-sm)] font-semibold text-sm cursor-pointer transition-all hover:bg-[#00f5d0]">Connect</button>
+                <Link href="/profile" className="flex-1 py-2 bg-transparent text-[var(--text)] border border-[var(--border)] rounded-[var(--radius-sm)] font-medium text-sm no-underline text-center transition-all hover:border-[var(--teal)] hover:text-[var(--teal)]">
+                  View Profile
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
