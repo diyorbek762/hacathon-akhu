@@ -72,17 +72,4 @@ export function useRealtimeCircleMessages(circleId: string) {
   }, [circleId])
 
   return { messages, loading }
-
-  async function addMessage(content: string) {
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
-
-    const { error } = await supabase.from('circle_messages').insert({
-      circle_id: circleId,
-      sender_id: user.id,
-      content,
-    })
-
-    if (error) console.error('Failed to send circle message', error)
-  }
 }
